@@ -1,0 +1,21 @@
+#!/usr/bin/expect
+set timeout 5
+set host [lindex $argv 0]
+set username  [lindex $argv 1]
+set password  [lindex $argv 2]
+set src_file  [lindex $argv 3]
+set dest_file [lindex $argv 4]
+
+spawn ssh $username@$host
+puts "$host:load"
+expect {
+    "password" {send "$password\r";exp_continue}
+    "yes/no"   {send "yes\r";exp_continue}
+    "login"    {send "alunch --info\r";exp_continue}
+    "load"     {send "exit\r"}
+    "No route to host" {exit}
+}
+send "exit\r"
+expect eof
+exit
+
