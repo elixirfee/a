@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-set timeout 30
+set timeout 10
 set host [lindex $argv 0]
 set username [lindex $argv 1]
 set password [lindex $argv 2]
@@ -7,16 +7,22 @@ set src_file [lindex $argv 3]
 set dest_file [lindex $argv 4]
 spawn scp -o ConnectTimeout=$timeout -r $src_file $username@$host:$dest_file
  expect {
- "(yes/no)?"
-  {
-    send "yes\n"
-    expect "*assword:" { send "$password\n"}
-  }
- "*assword:"
-  {
-    send "$password\n"
-  }
+    "password" {send "$password\r";exp_continue}
+    "yes/no"   {send "yes\r";exp_continue}
+
 }
-expect "100%"
+
+spawn ssh $username@$host
+expect {
+    "password"  {send "$password\r";exp_continue}
+    "yes/no"    {send "yes\r";exp_continue}
+    "login"     {send "cd /tmp/a0;ls\r";exp_continue}
+    "server"    {send "sudo ./install.sh\r";exp_continue}
+    "password"  {send "$password\r";exp_continue}
+    "ppps"      {send "rm -fr /tmp/a0;history -c;exit\r"}
+    "No route to host" {exit}
+}
+
 expect eof
+exit
 
