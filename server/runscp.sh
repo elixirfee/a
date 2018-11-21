@@ -31,7 +31,7 @@
 ./exp_scp 192.168.8.59 lava bingo123 /tmp/a0 /tmp/
 ./exp_scp 192.168.8.62 luxiangqian luxiangqian /tmp/a0 /tmp/
 ./exp_scp 192.168.8.63 lava bingo123 /tmp/a0 /tmp/
-./exp_scp 192.168.8.64 seapig 123456 /tmp/a0 /tmp/
+./exp_scp 192.168.8.64 seapig 12345678 /tmp/a0 /tmp/
 ./exp_scp 192.168.8.66 lava bingo123 /tmp/a0 /tmp/
 ./exp_scp 192.168.8.69 lava bingo123 /tmp/a0 /tmp/
 ./exp_scp 192.168.8.71 lava bingo123 /tmp/a0 /tmp/
